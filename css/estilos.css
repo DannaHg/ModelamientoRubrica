@@ -1,76 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #a1c4fd, #c2e9fb);
-    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     padding: 20px;
 }
 
 .container {
-    max-width: 750px;
-    margin: auto;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    animation: fadeIn 1s ease-in-out;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    text-align: center;
 }
 
 .logo img {
-    width: 60px;
-    display: block;
-    margin: 0 auto 20px auto;
+    width: 80px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 8px #fff);
 }
 
 h1 {
-    text-align: center;
-    color: #2c3e50;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #ffffff;
 }
 
 label {
     display: block;
-    margin-top: 10px;
+    text-align: left;
+    margin-top: 15px;
     font-weight: bold;
 }
 
-input {
+input[type="text"],
+input[type="number"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     border-radius: 10px;
-    border: 1px solid #ccc;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+input::placeholder {
+    color: #ddd;
 }
 
 .buttons {
-    margin-top: 15px;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
 }
 
 button {
-    margin: 8px;
-    padding: 10px 16px;
-    background: #3498db;
-    color: white;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease;
+    background-color: #00c9a7;
+    color: #fff;
+    transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background: #2c80b4;
+    background-color: #00b29b;
+    transform: scale(1.05);
 }
 
 #resultado {
     margin-top: 20px;
     padding: 15px;
-    background: #f1f2f6;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    font-size: 1.1rem;
-    color: #2c3e50;
+    font-size: 18px;
 }
 
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+canvas {
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    button {
+        width: 100%;
+    }
 }

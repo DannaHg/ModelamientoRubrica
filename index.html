@@ -2,245 +2,107 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interpolación de Rendimiento en Runners</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #fff;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 800px;
-            animation: slideUp 0.8s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo {
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
             text-align: center;
-            margin-bottom: 30px;
         }
 
         .logo img {
             width: 80px;
-            height: 80px;
-            filter: drop-shadow(0 8px 16px rgba(102, 126, 234, 0.4));
-            transition: transform 0.3s ease;
-        }
-
-        .logo img:hover {
-            transform: scale(1.1) rotate(5deg);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px #fff);
         }
 
         h1 {
-            text-align: center;
-            color: #2d3748;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #ffffff;
         }
 
         label {
             display: block;
-            color: #4a5568;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 1rem;
+            text-align: left;
+            margin-top: 15px;
+            font-weight: bold;
         }
 
-        input {
+        input[type="text"],
+        input[type="number"] {
             width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        input:focus {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 10px;
+            border: none;
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
         }
 
         .buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
         }
 
         button {
-            padding: 16px 24px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 12px 20px;
+            font-size: 15px;
             font-weight: 600;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background-color: #00c9a7;
+            color: #fff;
+            transition: background 0.3s, transform 0.2s;
         }
 
-        button:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        button:hover:before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.5);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #48bb78, #38a169);
-            color: white;
-            box-shadow: 0 8px 20px rgba(72, 187, 120, 0.4);
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(72, 187, 120, 0.5);
-        }
-
-        .btn-tertiary {
-            background: linear-gradient(135deg, #ed8936, #dd6b20);
-            color: white;
-            box-shadow: 0 8px 20px rgba(237, 137, 54, 0.4);
-        }
-
-        .btn-tertiary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(237, 137, 54, 0.5);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #f56565, #e53e3e);
-            color: white;
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.4);
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(245, 101, 101, 0.5);
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, #4299e1, #3182ce);
-            color: white;
-            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.4);
-        }
-
-        .btn-info:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(66, 153, 225, 0.5);
+        button:hover {
+            background-color: #00b29b;
+            transform: scale(1.05);
         }
 
         #resultado {
-            margin: 30px 0;
-            padding: 25px;
-            background: linear-gradient(135deg, #f7fafc, #edf2f7);
-            border-radius: 16px;
-            border: 2px solid #e2e8f0;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #2d3748;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .chart-container {
-            margin-top: 30px;
-            padding: 25px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 18px;
         }
 
         canvas {
-            max-width: 100%;
-            height: auto !important;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 25px;
-                margin: 10px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .buttons {
-                grid-template-columns: 1fr;
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
             }
         }
     </style>
@@ -253,233 +115,24 @@
 
         <h1>Estimación de Tiempo para Runners</h1>
 
-        <div class="form-group">
-            <label for="nombre">Nombre del corredor:</label>
-            <input type="text" id="nombre" placeholder="Ingresa tu nombre">
-        </div>
+        <label for="nombre">Nombre del corredor:</label>
+        <input type="text" id="nombre" placeholder="Ingresa tu nombre">
 
-        <div class="form-group">
-            <label for="distancia">Distancia a estimar (km):</label>
-            <input type="number" id="distancia" value="1.7" step="0.1">
-        </div>
+        <label for="distancia">Distancia a estimar (km):</label>
+        <input type="number" id="distancia" value="1.7" step="0.1">
 
         <div class="buttons">
-            <button class="btn-primary" onclick="estimar()">✨ Estimar</button>
-            <button class="btn-secondary" onclick="mostrarDatos()">📊 Mostrar Datos</button>
-            <button class="btn-info" onclick="mostrarHistorial()">📋 Ver Historial</button>
-            <button class="btn-tertiary" onclick="eliminarUltimo()">🗑️ Eliminar Último</button>
-            <button class="btn-danger" onclick="resetear()">🔄 Reiniciar</button>
+            <button onclick="estimar()">Estimar</button>
+            <button onclick="mostrarDatos()">Mostrar Datos</button>
+            <button onclick="mostrarHistorial()">Ver Historial</button>
+            <button onclick="eliminarUltimo()">Eliminar Último Dato</button>
+            <button onclick="resetear()">Reiniciar Gráfica</button>
         </div>
 
-        <div id="resultado">
-            <span class="pulse">Ingresa los datos y haz clic en "Estimar" para comenzar</span>
-        </div>
-
-        <div class="chart-container">
-            <canvas id="grafica" width="600" height="400"></canvas>
-        </div>
+        <div id="resultado"></div>
+        <canvas id="grafica" width="600" height="400"></canvas>
     </div>
 
-    <script>
-        // Aquí iría el contenido de tu archivo lagrange.js
-        // Por ahora incluyo funciones placeholder para que el diseño sea funcional
-        
-        let chart = null;
-        let datos = [];
-        let historial = [];
-
-        function estimar() {
-            const nombre = document.getElementById('nombre').value;
-            const distancia = parseFloat(document.getElementById('distancia').value);
-            
-            if (!nombre.trim()) {
-                mostrarResultado('⚠️ Por favor ingresa tu nombre', 'warning');
-                return;
-            }
-            
-            if (!distancia || distancia <= 0) {
-                mostrarResultado('⚠️ Por favor ingresa una distancia válida', 'warning');
-                return;
-            }
-            
-            // Simulación de cálculo (reemplaza con tu lógica de interpolación)
-            const tiempoEstimado = (distancia * 5.2 + Math.random() * 2).toFixed(2);
-            
-            const resultado = `🏃‍♂️ ${nombre}, tu tiempo estimado para ${distancia} km es: ${tiempoEstimado} minutos`;
-            mostrarResultado(resultado, 'success');
-            
-            // Agregar al historial
-            historial.push({
-                nombre: nombre,
-                distancia: distancia,
-                tiempo: tiempoEstimado,
-                fecha: new Date().toLocaleString()
-            });
-            
-            actualizarGrafica();
-        }
-        
-        function mostrarDatos() {
-            if (datos.length === 0) {
-                mostrarResultado('📝 No hay datos registrados aún', 'info');
-                return;
-            }
-            
-            let texto = '📊 Datos registrados:\n';
-            datos.forEach((dato, index) => {
-                texto += `${index + 1}. Distancia: ${dato.distancia}km - Tiempo: ${dato.tiempo}min\n`;
-            });
-            
-            mostrarResultado(texto, 'info');
-        }
-        
-        function mostrarHistorial() {
-            if (historial.length === 0) {
-                mostrarResultado('📋 No hay historial disponible', 'info');
-                return;
-            }
-            
-            let texto = '📋 Historial de estimaciones:\n';
-            historial.forEach((registro, index) => {
-                texto += `${index + 1}. ${registro.nombre} - ${registro.distancia}km: ${registro.tiempo}min (${registro.fecha})\n`;
-            });
-            
-            mostrarResultado(texto, 'info');
-        }
-        
-        function eliminarUltimo() {
-            if (historial.length === 0) {
-                mostrarResultado('❌ No hay datos para eliminar', 'warning');
-                return;
-            }
-            
-            const eliminado = historial.pop();
-            mostrarResultado(`🗑️ Eliminado: ${eliminado.nombre} - ${eliminado.distancia}km`, 'success');
-            actualizarGrafica();
-        }
-        
-        function resetear() {
-            historial = [];
-            datos = [];
-            if (chart) {
-                chart.destroy();
-                chart = null;
-            }
-            mostrarResultado('🔄 Datos reiniciados correctamente', 'success');
-        }
-        
-        function mostrarResultado(texto, tipo = 'info') {
-            const resultado = document.getElementById('resultado');
-            resultado.innerHTML = texto.replace(/\n/g, '<br>');
-            
-            // Remover clases anteriores
-            resultado.className = '';
-            
-            // Agregar clase según el tipo
-            switch(tipo) {
-                case 'success':
-                    resultado.style.background = 'linear-gradient(135deg, #c6f6d5, #9ae6b4)';
-                    resultado.style.borderColor = '#48bb78';
-                    break;
-                case 'warning':
-                    resultado.style.background = 'linear-gradient(135deg, #fefcbf, #faf089)';
-                    resultado.style.borderColor = '#ed8936';
-                    break;
-                case 'error':
-                    resultado.style.background = 'linear-gradient(135deg, #fed7d7, #feb2b2)';
-                    resultado.style.borderColor = '#f56565';
-                    break;
-                default:
-                    resultado.style.background = 'linear-gradient(135deg, #f7fafc, #edf2f7)';
-                    resultado.style.borderColor = '#e2e8f0';
-            }
-        }
-        
-        function actualizarGrafica() {
-            const ctx = document.getElementById('grafica').getContext('2d');
-            
-            if (chart) {
-                chart.destroy();
-            }
-            
-            const labels = historial.map((_, index) => `Estimación ${index + 1}`);
-            const tiempos = historial.map(h => parseFloat(h.tiempo));
-            const distancias = historial.map(h => h.distancia);
-            
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Tiempo (min)',
-                            data: tiempos,
-                            borderColor: '#667eea',
-                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.4
-                        },
-                        {
-                            label: 'Distancia (km)',
-                            data: distancias,
-                            borderColor: '#48bb78',
-                            backgroundColor: 'rgba(72, 187, 120, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                },
-                                color: '#2d3748'
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Evolución de Estimaciones',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            },
-                            color: '#2d3748'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            ticks: {
-                                color: '#4a5568'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            },
-                            ticks: {
-                                color: '#4a5568'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Inicializar gráfica vacía
-        actualizarGrafica();
-    </script>
+    <script src="js/lagrange.js"></script>
 </body>
 </html>
